@@ -14,20 +14,8 @@ import com.google.gson.JsonParser;
 public class Api {
 	
 	private String city;
+	private String unit;
 	
-	public static void main(String[] args) {
-	Api api = new Api();
-	try {
-		System.out.print(api.fetchApi("Atlanta"));
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (InterruptedException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	}
-
 	public String getCity() {
 		return city;
 	}
@@ -36,9 +24,17 @@ public class Api {
 		this.city = city;
 	}
 	
-	public String fetchApi(String city) throws IOException, InterruptedException{
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+
+	public String fetchApi(String city, String unit) throws IOException, InterruptedException{
 		HttpRequest request = HttpRequest.newBuilder()
-		.uri(URI.create("https://yahoo-weather5.p.rapidapi.com/weather?location="+city+"&format=json&u=f"))
+		.uri(URI.create("https://yahoo-weather5.p.rapidapi.com/weather?location="+city+"&format=json&u="+unit))
 		.header("x-rapidapi-key", "b4e646b5acmshefad74f73aab4edp133812jsnc1d7ba4e5b9e")
 		.header("x-rapidapi-host", "yahoo-weather5.p.rapidapi.com")
 		.method("GET", HttpRequest.BodyPublishers.noBody())
