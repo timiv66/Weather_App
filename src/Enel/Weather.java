@@ -172,12 +172,12 @@ public class Weather {
         }
 
         public static class Atmosphere {
-            private int humidity;
-            private int visibility;
-            private int pressure;
+            private double humidity;
+            private double visibility;
+            private double pressure;
 
             // Getters and Setters
-            public int getHumidity() {
+            public double getHumidity() {
                 return humidity;
             }
 
@@ -185,7 +185,7 @@ public class Weather {
                 this.humidity = humidity;
             }
 
-            public int getVisibility() {
+            public double getVisibility() {
                 return visibility;
             }
 
@@ -193,7 +193,7 @@ public class Weather {
                 this.visibility = visibility;
             }
 
-            public int getPressure() {
+            public double getPressure() {
                 return pressure;
             }
 

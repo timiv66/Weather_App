@@ -1,6 +1,21 @@
 package Enel;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.sql.RowIdLifetime;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
+
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,6 +34,10 @@ public class Weather_FX extends Application{
 	
 	Font titleFont = new Font("Elephant",25);
 	Font logFont = new Font("Book Antiqua",20);
+	String city;
+	Gson gson = new GsonBuilder().setPrettyPrinting().create();
+	Api api = new Api();
+	
 	
 	public static void main(String[] args) {
 		launch();
@@ -60,6 +79,22 @@ public class Weather_FX extends Application{
 		srchBtn.setTranslateX(150);
 		srchBtn.setTranslateY(295);
 		
+		srchBtn.setOnAction(new EventHandler <ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+			city = cityTxtF.getText();
+			try {
+				t.setRoot(forecast(t));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			}
+		});
+		
 		Pane logPane = new Pane();
 		
 		//Sets background color
@@ -69,6 +104,23 @@ public class Weather_FX extends Application{
 		
 		logPane.getChildren().addAll(titlLbl,logImg,cityLbl,cityTxtF,srchBtn);
 		return logPane;
+	}
+	
+	public Pane forecast(Scene t) throws JsonSyntaxException, IOException, InterruptedException {
+		
+		Weather weather = gson.fromJson(api.fetchApi(city), Weather.class);
+		
+		
+		
+		Pane forePane = new Pane();
+		
+		//Sets background color
+		BackgroundFill background_fill = new BackgroundFill(Color.LIGHTBLUE,CornerRadii.EMPTY, Insets.EMPTY); 
+		Background background = new Background(background_fill);
+		forePane.setBackground(background);
+		
+		forePane.getChildren().addAll();
+		return forePane;
 	}
 
 }
