@@ -17,6 +17,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -30,6 +31,8 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class Weather_FX extends Application{
@@ -37,6 +40,7 @@ public class Weather_FX extends Application{
 	//Fonts for text and labels
 	Font titleFont = new Font("Elephant",25);
 	Font logFont = new Font("Book Antiqua",20);
+	Font tempFont = new Font("Elephant",55);
 	
 	//Variable to hold city input from user
 	String city;
@@ -56,6 +60,7 @@ public class Weather_FX extends Application{
 	@Override
 	public void start(Stage mainStage) throws Exception {
 		// TODO Auto-generated method stub
+		mainStage.setResizable(false);
 		Pane p1 = new Pane();
 		Scene t = new Scene(p1,350,370);
 		t.setFill(Color.BLUE);
@@ -151,7 +156,27 @@ public class Weather_FX extends Application{
 		
 		//Creation of weather object and storing API request data inside
 		Weather weather = gson.fromJson(api.fetchApi(city,unit), Weather.class);
-
+		
+		//Images
+		ImageView sunnyImg = new ImageView();
+		ImageView partlyCldImg = new ImageView();
+		ImageView cloudyImg = new ImageView();
+		ImageView thunderImg = new ImageView();
+		ImageView rainImg = new ImageView();
+		
+		//Displays current city name
+		Text cityNametTxt = new Text("City name: "+weather.getLocation().getCity());
+		cityNametTxt.setTextAlignment(TextAlignment.LEFT);
+		cityNametTxt.setX(80);
+		cityNametTxt.setY(30);
+		cityNametTxt.setFont(logFont);
+		
+		//Displays current temperature
+		String curTempStr = Integer.toString(weather.getCurrentObservation().getCondition().getTemperature());
+		Text curTempTxt = new Text(curTempStr);
+		curTempTxt.setY(100);
+		curTempTxt.setX(140);
+		curTempTxt.setFont(tempFont);
 		
 		Pane forePane = new Pane();
 		
@@ -160,7 +185,7 @@ public class Weather_FX extends Application{
 		Background background = new Background(background_fill);
 		forePane.setBackground(background);
 		
-		forePane.getChildren().addAll();
+		forePane.getChildren().addAll(cityNametTxt,curTempTxt);
 		return forePane;
 	}
 
