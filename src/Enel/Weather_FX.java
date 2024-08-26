@@ -62,7 +62,7 @@ public class Weather_FX extends Application{
 		// TODO Auto-generated method stub
 		mainStage.setResizable(false);
 		Pane p1 = new Pane();
-		Scene t = new Scene(p1,350,370);
+		Scene t = new Scene(p1,350,380);
 		t.setFill(Color.BLUE);
 		t.setRoot(login(t));
 		mainStage.setScene(t);
@@ -92,11 +92,6 @@ public class Weather_FX extends Application{
 		cityTxtF.setTranslateX(99);
 		cityTxtF.setTranslateY(260);
 		
-		//Search Button
-		Button srchBtn = new Button("Search");
-		srchBtn.setTranslateX(150);
-		srchBtn.setTranslateY(330);
-		
 		//Buttons for choosing temperature unit
 		ToggleGroup group = new ToggleGroup();
 
@@ -109,7 +104,18 @@ public class Weather_FX extends Application{
 		celBtn.setToggleGroup(group);
 		celBtn.setTranslateX(190);
 		celBtn.setTranslateY(300);
-				 
+		
+		//Error message
+		Text errTxt = new Text("");
+		errTxt.setVisible(false);
+		errTxt.setX(127);
+		errTxt.setY(337);
+		errTxt.setFill(Color.RED);
+		
+		//Search Button
+		Button srchBtn = new Button("Search");
+		srchBtn.setTranslateX(150);
+		srchBtn.setTranslateY(350);		 
 		
 		srchBtn.setOnAction(new EventHandler <ActionEvent>() {
 			@Override
@@ -134,6 +140,9 @@ public class Weather_FX extends Application{
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}catch (NullPointerException e) {
+				errTxt.setVisible(true);
+				errTxt.setText("Please enter a city");
 			}
 			}
 		});
@@ -148,7 +157,7 @@ public class Weather_FX extends Application{
 		logPane.setBackground(background);
 		
 		//Adding all javaFX elements to pane
-		logPane.getChildren().addAll(titlLbl,logImg,cityLbl,cityTxtF,srchBtn,fahBtn,celBtn);
+		logPane.getChildren().addAll(titlLbl,logImg,cityLbl,cityTxtF,srchBtn,fahBtn,celBtn,errTxt);
 		return logPane;
 	}
 	
