@@ -40,7 +40,6 @@ public class Api {
 		.method("GET", HttpRequest.BodyPublishers.noBody())
 		.build();
 		
-		
 		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 			
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
